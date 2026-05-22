@@ -1,0 +1,91 @@
+---
+title: "Research project (add your own title here)"
+author: "Add student number here (not your name)"
+output: pdf_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+# Introduction 
+
+Premature age-adjusted mortality is an important indicator of population health because it captures deaths occurring before the expected age and often reflects preventable inequalities in social, behavioural, healthcare, and environmental conditions. Across the United States, premature mortality varies substantially between counties, suggesting that local health outcomes may be shaped not only by individual health behaviours but also by broader socioeconomic structures, healthcare resource distribution, and environmental exposure. Examining the factors associated with county-level premature mortality can help explain the spatial distribution of public health inequality and the social mechanisms that may underlie it.
+
+This report asks: **to what extent are behavioural, socioeconomic, healthcare-access, environmental, and educational factors associated with premature age-adjusted mortality across U.S. counties?** The aim of this study is to examine the relative associations between premature mortality and a set of theoretically relevant county-level predictors through a multiple linear regression model. In this model, behavioural risks, socioeconomic disadvantage, healthcare access, environmental exposure, and educational attainment are included simultaneously, allowing each predictor to be interpreted as a conditional association with premature mortality when the other included variables are held constant.
+
+Based on the ecological model of health, this report understands premature mortality as the outcome of multiple interacting social and health-related pathways. The general hypothesis is that counties with higher health risks, greater structural disadvantage, more limited healthcare resources, higher environmental exposure, and lower educational attainment are expected to have higher premature age-adjusted mortality rates. More specifically, adult smoking, obesity, physical inactivity, unemployment, child poverty, uninsured rate, and PM2.5 exposure are expected to be positively associated with premature mortality. Among these factors, smoking, physical inactivity, child poverty, and educational attainment are expected to show relatively stronger associations because they are closely linked to long-term disease risk, material resource constraints, and health literacy. By contrast, primary care physician availability and the proportion of adults with a bachelor’s degree or higher are expected to be negatively associated with premature mortality. Excessive drinking is also expected to show a positive association, although its strength may be weaker or less consistent once other county-level factors are included in the model.
+
+To test these hypotheses, this report uses county-level data from the 2018 County Health Rankings and the American Community Survey and fits a multiple linear regression model. It should be noted that this study is based on observational county-level aggregate data; therefore, the regression coefficients can only be interpreted as associations at the county level. Causal direction cannot be established, nor can the findings be applied to inferences at the individual level.
+
+\vspace{6mm}
+
+# Literature and theory
+
+Existing literature generally understands population health outcomes as the result of multiple interacting determinants rather than individual behaviour alone. The ecological model of health argues that health outcomes are shaped by factors operating at different levels, including individual behaviours, interpersonal relations, community conditions, institutional resources, and broader policy environments (McLeroy et al., 1988). Similarly, research on the social determinants of health emphasises that health inequalities are closely linked to unequal social and material conditions, rather than being reducible to personal choices (Marmot, 2005). This theoretical perspective is appropriate for analysing premature age-adjusted mortality across U.S. counties because counties differ not only in health behaviours, but also in socioeconomic disadvantage, healthcare access, educational attainment, and environmental exposure. Therefore, the literature supports a multi-level framework in which behavioural, socioeconomic, healthcare-access, environmental, and educational factors are examined together.
+
+Behavioural risk factors are a major pathway through which premature mortality may vary across counties. Smoking has been strongly associated with elevated mortality risk, especially through cardiovascular disease, respiratory disease, and cancer-related pathways (Jha et al., 2013). Obesity is also associated with higher cause-specific mortality, particularly through metabolic and cardiovascular mechanisms (MacMahon et al., 2009). Physical inactivity has been identified as a major contributor to chronic disease, while excessive alcohol consumption increases disease burden, injury risk, and mortality-related health costs (Booth et al., 2012; Rehm et al., 2009). These studies support the inclusion of adult smoking, obesity, physical inactivity, and excessive drinking as behavioural predictors in the model. Based on this literature, these variables are expected to be positively associated with premature mortality, with smoking and physical inactivity expected to show relatively stronger associations because of their direct and long-term links to chronic disease risk.
+
+Socioeconomic disadvantage is another key structural pathway in the explanation of county-level health inequality. Adler and Newman (2002) argue that socioeconomic status affects health through multiple mechanisms, including access to healthcare, exposure to stress, material resources, and living conditions. Chetty et al. (2016) further show that income is strongly associated with life expectancy in the United States, and that this relationship varies substantially across places. For this study, child poverty and unemployment are used to capture county-level material disadvantage and economic insecurity. Counties with higher child poverty may experience long-term resource constraints, poorer living conditions, and reduced access to health-promoting opportunities. Counties with higher unemployment may also face greater economic stress, weaker insurance coverage, and reduced social stability. Therefore, the literature supports the inclusion of child poverty and unemployment as socioeconomic predictors, and both are expected to be positively associated with premature mortality.
+
+Socioeconomic conditions may also operate as important confounding variables. Poverty and unemployment are not only likely to affect mortality directly, but may also shape the distribution of behavioural risks, healthcare access, and educational opportunities. For example, disadvantaged counties may have higher smoking rates, higher physical inactivity, poorer healthcare access, and higher premature mortality at the same time. If these structural factors are not accounted for, the relationship between behavioural risks and mortality may be overstated or misinterpreted. Therefore, the literature suggests that socioeconomic disadvantage should be treated both as a core explanatory pathway and as a confounding context that must be considered when estimating the association between other predictors and premature mortality.
+
+Healthcare access provides a further institutional pathway linking county-level conditions to premature mortality. Strong primary care systems are associated with better population health because they support prevention, early diagnosis, chronic disease management, and continuity of care (Starfield et al., 2005). By contrast, lack of health insurance is associated with elevated mortality risk because uninsured individuals are more likely to delay treatment, forgo preventive care, or access healthcare only when conditions become more severe (Wilper et al., 2009). This literature justifies the inclusion of primary care physician availability and uninsured rate as healthcare-access variables. Primary care physician availability is expected to be negatively associated with premature mortality, while uninsured rate is expected to be positively associated with premature mortality.
+
+However, healthcare access should not be interpreted in isolation from socioeconomic conditions. Counties with higher poverty or unemployment may also have higher uninsured rates and weaker access to primary care. In this sense, healthcare access may partly reflect the institutional consequences of broader structural disadvantage. Including both socioeconomic and healthcare-access variables in the same regression model therefore allows the analysis to estimate the conditional association of each factor with premature mortality while holding other theoretically relevant factors constant.
+
+Educational attainment is also a central structural determinant of health. Cutler and Lleras-Muney (2010) show that education is closely related to health behaviours and health outcomes through mechanisms such as health literacy, employment opportunities, income, risk perception, and the ability to navigate healthcare systems. At the county level, the proportion of adults with a bachelor’s degree or higher can therefore be understood not only as an indicator of individual education, but also as a broader measure of local human capital and social resources. Counties with higher educational attainment may have stronger health literacy, better labour market opportunities, and greater capacity to access and use healthcare resources. For this reason, educational attainment is expected to be negatively associated with premature mortality.
+
+Education may also overlap with other predictors in the model. Lower educational attainment may be associated with higher smoking prevalence, higher physical inactivity, higher unemployment, lower income, and weaker healthcare access. Therefore, education is not only an independent predictor of mortality, but also an important control variable for interpreting the associations between behavioural risks, socioeconomic disadvantage, and premature mortality. If education is omitted, the estimated effects of other predictors may partly reflect education-related differences in health literacy, resource access, and behavioural patterns.
+
+Environmental exposure adds a further dimension to the explanation of premature mortality. Fine particulate matter, especially PM2.5, has been linked to cardiopulmonary disease and elevated mortality risk (Pope and Dockery, 2006). Brook et al. (2010) also argue that particulate matter air pollution affects cardiovascular health and contributes to disease and mortality burden. Unlike smoking, poverty, or education, PM2.5 captures a physical environmental pathway through which county-level conditions may affect health outcomes. Its inclusion therefore broadens the model beyond behavioural and socioeconomic explanations and reflects the ecological model’s emphasis on multiple levels of health determinants. Based on this literature, PM2.5 exposure is expected to be positively associated with premature mortality.
+
+Overall, the literature supports a multi-pathway explanation of premature age-adjusted mortality. Behavioural risks may increase mortality through chronic disease pathways; socioeconomic disadvantage may shape mortality through material resources, stress, living conditions, and healthcare access; healthcare access may affect prevention, diagnosis, and treatment; education may influence health literacy, employment, and resource access; and environmental pollution may create additional physical health risks. These factors are not independent of one another, but are likely to be interrelated and mutually reinforcing. Therefore, a multiple linear regression model is appropriate because it allows each predictor to be examined while holding other theoretically relevant variables constant. This approach is consistent with the literature’s emphasis on confounding relationships and provides the theoretical basis for the hypotheses tested in this report.
+
+\vspace{6mm}
+
+# Data and methodology 
+
+Describe your data and source, explain how you plan to examine it, justify the choice, discuss limitations (~500 words).
+
+\vspace{6mm}
+
+# Results
+
+Run your descriptive analysis and models. Explain the results. What are the main findings and what does it all mean (~750-1000 words)?
+
+\vspace{6mm}
+
+# Conclusion 
+
+Roughly 250-300 words summarising key points, tying results to literature. Discuss limitations of results. How do your results compare to other findings
+
+#Bibliography 
+
+*Adler, NE & Newman, K 2002, ‘Socioeconomic Disparities In Health: Pathways And Policies’, Health Affairs, vol. 21, no. 2, pp. 60–76.*
+
+*Booth, FW, Roberts, CK & Laye, MJ 2012, ‘Lack of Exercise Is a Major Cause of Chronic Diseases’ R Terjung (ed), COMPREHENSIVE PHYSIOLOGY, vol. 2, no. 2, pp. 1143–1211.*
+
+*Brook, RD, Rajagopalan, S, Pope, CA, Brook, JR, Bhatnagar, A, Diez-Roux, AV, Holguin, F, Hong, Y, Luepker, RV, Mittleman, MA, Peters, A, Siscovick, D, Smith, SC, Whitsel, L & Kaufman, JD 2010, ‘Particulate Matter Air Pollution and Cardiovascular Disease: An Update to the Scientific Statement From the American Heart Association’, Circulation (New York, N.Y.), vol. 121, no. 21, pp. 2331–2378.*
+
+*Chetty, R, Stepner, M, Abraham, S, Lin, S, Scuderi, B, Turner, N, Bergeron, A & Cutler, D 2016, ‘The Association Between Income and Life Expectancy in the United States, 2001-2014’, JAMA: the journal of the American Medical Association, vol. 315, no. 16, pp. 1750–1766.*
+
+*Cutler, DM & Lleras-Muney, A 2010, ‘Understanding differences in health behaviors by education’, Journal of health economics, vol. 29, no. 1, pp. 1–28.*
+
+*Jha, P, Ramasundarahettige, C, Landsman, V, Rostron, B, Thun, M, Anderson, RN, McAfee, T & Peto, R 2013, ‘21st-Century Hazards of Smoking and Benefits of Cessation in the United States’, The New England journal of medicine, vol. 368, no. 4, pp. 341–350.*
+
+*McLeroy, KR, Bibeau, D, Steckler, A & Glanz, K 1988, ‘An Ecological Perspective on Health Promotion Programs’, Health education quarterly, vol. 15, no. 4, pp. 351–377.*
+
+*Marmot, M 2005, ‘Social determinants of health inequalities’, The Lancet (British edition), vol. 365, no. 9464, pp. 1099–1104.*
+
+*MacMahon, S, Baigent, C, Duffy, S, Rodgers, A, Tominaga, S, Chambless, L, De Backer, G, De Bacquer, D, Kornitzer, M, Whincup, P, Wannamethee, SG, Morris, R, Wald, N, Morris, J, Law, M, Knuiman, M, Bartholomew, H, Davey Smith, G, Sweetnam, P, Elwood, P, Yarnell, J, Kronmal, R, Kromhout, D, Sutherland, S, Keil, J, Jensen, G, Schnohr, P, Hames, C, Tyroler, A, Aromaa, A, Knekt, P, Reunanen, A, Tuomilehto, J, Jousilahti, P, Vartiainen, E, Puska, P, Kuznetsova, T, Richart, T, Staessen, J, Thijs, L, Jørgensen, T, Thomsen, T, Sharp, D, Curb, JD, Qizilbash, N, Iso, H, Sato, S, Kitamura, A, Naito, Y, Benetos, A, Guize, L, Goldbourt, U, Tomita, M, Nishimoto, Y, Murayama, T, Criqui, M, Davis, C, Hart, C, Hole, D, Gillis, C, Jacobs, D, Blackburn, H, Luepker, R, Neaton, J, Eberly, L, Cox, C, Levy, D, D’Agostino, R, Silbershatz, H, Tverdal, A, Selmer, R, Meade, T, Garrow, K, Cooper, J, Speizer, F, Stampfer, M, Menotti, A, Spagnolo, A, Tsuji, I, Imai, Y, Ohkubo, T, Hisamichi, S, Haheim, L, Holme, I, Hjermann, I, Leren, P, Ducimetiere, P, Empana, J, Jamrozik, K, Broadhurst, R, Assmann, G, Schulte, H, Bengtsson, C, Björkelund, C, Lissner, L, Sorlie, P, Garcia-Palmieri, M, Barrett-Connor, E, Langer, R & Nakachi, K 2009, ‘Body-mass index and cause-specific mortality in 900 000 adults: collaborative analyses of 57 prospective studies’, The Lancet (British edition), vol. 373, no. 9669, pp. 1083–1096.*
+
+*Pope, CA & Dockery, DW 2006, ‘Health effects of fine particulate air pollution: Lines that connect’, Journal of the Air & Waste Management Association (1995), vol. 56, no. 6, pp. 709–742.*
+
+*Rehm, J, Mathers, C, Popova, S, Thavorncharoensap, M, Teerawattananon, Y & Patra, J 2009, ‘Alcohol and Global Health 1 Global burden of disease and injury and economic cost attributable to alcohol use and alcohol-use disorders’, The Lancet (British edition), vol. 373, no. 9682, pp. 2223–2233.*
+
+*STARFIELD, B, SHI, L & MACINKO, J 2005, ‘Contribution of Primary Care to Health Systems and Health’, The Milbank quarterly, vol. 83, no. 3, pp. 457–502.*
+
+*U.S. Census Bureau. (2018). American Community Survey 5-Year Estimates (Table S1501: Educational Attainment). https://data.census.gov/table/ACSST5Y2018.S1501*
+
+*Wilper, AP, Woolhandler, S, Lasser, KE, McCormick, D, Bor, DH & Himmelstein, DU 2009, ‘Health Insurance and Mortality in US Adults’, American journal of public health (1971), vol. 99, no. 12, pp. 2289–2295.*
